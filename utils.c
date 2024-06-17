@@ -7,6 +7,10 @@ float distance2D(const struct Coord2D a, const struct Coord2D b)
     return sqrtf(powf(a.x  - b.x, 2) + powf(a.y - b.y, 2));
 }
 
+/*
+    The function finds the coordinates of two centers of circles defined by two points.
+    return: 0 in case of success, 1 in case of failure.
+*/
 int findCircleCenter2D(const struct Coord2D a, const struct Coord2D b, float radius, struct Coord2D *center1, struct Coord2D *center2)
 {
     float 
@@ -25,7 +29,7 @@ int findCircleCenter2D(const struct Coord2D a, const struct Coord2D b, float rad
     return d <= 0;
 }
 
-int findAimsInCircle(const struct Coord2D center, float radius, const Target *targets, int targetsNumber)
+int findTargetsInCircle(const struct Coord2D center, float radius, const Target *targets, int targetsNumber)
 {
     int hitTargets = 0;
     for (int i = 0; i < targetsNumber; i++)

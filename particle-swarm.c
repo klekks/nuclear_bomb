@@ -5,20 +5,12 @@
 
 #include "include/utils.h"
 
-struct Particle
-{
-    struct Coord2D current_coord;
-    struct Coord2D best_coord;
 
-    Speed2D speed;
-
-    int best_result;
-};
 
 
 int update_particle_score(struct Particle *particle, float radius, const Target *targets, int targetsNumber)
 {
-    int hitTargets = findAimsInCircle(particle->current_coord, radius, targets, targetsNumber);
+    int hitTargets = findTargetsInCircle(particle->current_coord, radius, targets, targetsNumber);
     if (hitTargets >= particle->best_result)
     {
         particle->best_result = hitTargets;
@@ -75,27 +67,7 @@ int run_swarm(int cnt_particle, float inertia_rate, float attraction_rate, float
     return global_best_result;
 }
 
-int true_ans(Target *aims, int aims_cnt, float radius)
-{
-    struct Particle p = {{0,0}, {0,0}, {0,0}, 0};
-    p.best_result = 0;
-    for (int i = 0; i < aims_cnt; i++)
-    {
-        for (int j = i + 1; j < aims_cnt; j++)
-        {
-            struct Coord2D center1, center2;
 
-            findCircleCenter2D(aims[i], aims[j], radius, &center1, &center2);
-
-            p.current_coord = center1;
-            update_particle_score(&p, radius, aims, aims_cnt);
-            p.current_coord = center2;
-            update_particle_score(&p, radius, aims, aims_cnt);
-        }
-    }
-
-    return p.best_result;
-}
 
 #define N (100)
 int main()
